@@ -26,7 +26,9 @@ jobs:
         with:
           node-version: '14'
       - name: Install dependencies
-        run: npm install
+        run: |
+         cd sample-nodejs-app
+         npm install
 
   build:
     runs-on: ubuntu-latest
@@ -35,7 +37,9 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Build application
-        run: npm run build
+        run: |
+         cd sample-nodejs-app
+         npm run build
         
   sonar_scan:
     runs-on: ubuntu-latest
