@@ -60,6 +60,7 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
+          echo "PATH=$PATH"
           sonar-scanner \
             -Dsonar.projectVmoralles_first-pipeline \
             -Dsonar.sources=. \
