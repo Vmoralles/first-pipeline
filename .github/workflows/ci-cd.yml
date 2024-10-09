@@ -54,6 +54,11 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
 
+      - name: Check SonarScanner installation
+        run: |
+          which sonar-scanner || echo "SonarScanner não está instalado."
+          whereis sonar-scanner || echo "SonarScanner não está instalado."
+          
       - name: Run SonarQube Scan
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
