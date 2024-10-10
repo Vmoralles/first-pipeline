@@ -51,7 +51,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
       - name: Run SonarQube Scan
-        uses: SonarSource/sonarcloud-github-action@v1.11
+        uses: SonarSource/sonarcloud-github-action@v3.1.0
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_PROJECTKEY: Vmoralles_first-pipeline
