@@ -82,9 +82,9 @@ jobs:
           echo 'EXPOSE 3000' >> Dockerfile
           echo 'CMD ["node", "app.js"]' >> Dockerfile
       - name: Build Docker image
-        run: docker build -t  ${{ secrets.DOCKER_USERNAME }}/nodeImage:v1 .
+        run: docker build -t  ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1 .
       - name: Push to Docker HUb
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/nodeImage:v1    
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1    
 
   deploy:
     runs-on: ubuntu-latest
