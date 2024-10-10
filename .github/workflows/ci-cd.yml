@@ -3,10 +3,10 @@ name: CI-CD Pipeline
 on:
   push:
     branches:
-      - main
+      - TESTES
   pull_request:
     branches:
-      - main
+      - TESTES
 
 jobs:
   prepare:
@@ -31,30 +31,6 @@ jobs:
         run: |
          cd sample-nodejs-app
          npm install
-         
-  install_sonar_scanner:
-    runs-on: ubuntu-latest
-    needs: install_dependencies
-    steps:
-      - name: Install SonarScanner
-        run: |
-          # Atualizar o repositório
-          sudo apt-get update
-
-          # Instalar unzip, caso não esteja instalado
-          sudo apt-get install -y unzip
-
-          # Baixar o SonarScanner
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2956-linux.zip -O sonar-scanner.zip
-
-          # Descompactar o arquivo baixado
-          unzip sonar-scanner.zip
-
-          # Mover para o diretório /opt/sonar-scanner
-          sudo mv sonar-scanner-4.8.0.2956-linux /opt/sonar-scanner
-
-          # Adicionar SonarScanner ao PATH
-          echo "PATH=/opt/sonar-scanner/bin:$PATH" >> $GITHUB_ENV
 
   build:
     runs-on: ubuntu-latest
@@ -66,28 +42,3 @@ jobs:
         run: |
          cd sample-nodejs-app
          npm run build
-
-  sonar_scan:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Check SonarScanner installation
-        run: |
-          which sonar-scanner || echo "SonarScanner não está instalado."
-          whereis sonar-scanner || echo "SonarScanner não está instalado."
-          
-      - name: Run SonarQube Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=vmoralles_first-pipeline \
-            -Dsonar.organization=vmoralles \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-
-        
