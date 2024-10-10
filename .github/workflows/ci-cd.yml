@@ -92,4 +92,4 @@ jobs:
          key: ${{ secrets.EC2_SSH_KEY }}
          script: |
             sudo docker pull ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1
-            sudo docker run -d -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1
+            sudo docker run -d -p 8080:8080 ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1
