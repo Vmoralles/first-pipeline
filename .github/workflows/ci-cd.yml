@@ -52,8 +52,11 @@ jobs:
         uses: actions/checkout@v2
       - name: Run SonarQube Scan
         uses: SonarSource/sonarcloud-github-action@v3.1.0
+        with:
+          args: >
+            -Dsonar.projectKey=Vmoralles_first-pipeline
+            -Dsonar.organization=vmoralles
+            -Dsonar.sources=.
+            -Dsonar.host.url=https://sonarcloud.io
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_PROJECTKEY: Vmoralles_first-pipeline
-          SONAR_ORGANIZATION: vmoralles
-          SONAR_HOST_URL: https://sonarcloud.io
