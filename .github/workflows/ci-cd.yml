@@ -50,19 +50,10 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-
-      - name: Install SonarScanner
-        run: |
-          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.6.2.2472-linux.zip
-          unzip sonar-scanner-cli-4.6.2.2472-linux.zip
-          export PATH="$PATH:$(pwd)/sonar-scanner-4.6.2.2472-linux/bin"
       - name: Run SonarQube Scan
+        uses: SonarSource/sonarcloud-github-action@v1.11
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=Vmoralles_first-pipeline \
-            -Dsonar.organization=vmoralles \
-            -Dsonar.sources=. \
-            -Dsonar.host.url=https://sonarcloud.io\
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECTKEY: Vmoralles_first-pipeline
+          SONAR_ORGANIZATION: vmoralles
+          SONAR_HOST_URL: https://sonarcloud.io}
