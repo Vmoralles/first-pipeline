@@ -91,6 +91,5 @@ jobs:
          username: ubuntu
          key: ${{ secrets.EC2_SSH_KEY }}
          script: |
-            sudo usermod -aG docker $USER
-            docker pull ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1
-            docker run -d -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1
+            sudo docker run -d -p 3000:3000 ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1
