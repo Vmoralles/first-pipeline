@@ -56,4 +56,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_PROJECTKEY: Vmoralles_first-pipeline
           SONAR_ORGANIZATION: vmoralles
-          SONAR_HOST_URL: https://sonarcloud.io}
+          SONAR_HOST_URL: https://sonarcloud.io
