@@ -1,7 +1,7 @@
-FROM public.ecr.aws/bitnami/node:16.18.1
-RUN mkdir -p /usr/src/calc
-WORKDIR /usr/src/calc
-COPY . .
+FROM node:14
+WORKDIR /usr/src/app
+COPY sample-nodejs-app/package*.json ./
 RUN npm install
-# EXPOSE 3000
-CMD [ "node", "app.js" ]
+COPY sample-nodejs-app/. .  
+EXPOSE 3000
+CMD ["node", "app.js"]
