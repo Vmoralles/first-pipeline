@@ -1,7 +1,7 @@
 FROM node:14
 WORKDIR /usr/src/app
-COPY package*.json ./
+RUN git clone https://github.com/Vmoralles/first-pipeline.git .
+WORKDIR /usr/src/app/sample-nodejs-app
 RUN npm install
-COPY . .
 EXPOSE 3000
-CMD ["node", "app.js"]
+CMD ["node", "start"]
