@@ -3,10 +3,10 @@ name: CI-CD Pipeline
 on:
   push:
     branches:
-      - TESTES
+      - main
   pull_request:
     branches:
-      - TESTES
+      - main
 
 jobs:
   prepare:
