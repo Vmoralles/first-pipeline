@@ -72,30 +72,24 @@ jobs:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-      - name: Create dockerfile
-        run: |
-          echo 'FROM node:14' > Dockerfile
-          echo 'WORKDIR /usr/src/app' >> Dockerfile
-          echo 'COPY package*.json ./' >> Dockerfile
-          echo 'RUN npm install' >> Dockerfile
-          echo 'COPY . .' >> Dockerfile
-          echo 'EXPOSE 3000' >> Dockerfile
-          echo 'CMD ["node", "app.js"]' >> Dockerfile
       - name: Build Docker image
-        run: docker build -t  ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1 .
+        run: |
+          cd sample-nodejs-app
+          docker build -t  ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1 .
+          docker run -p 3000:3000 mvittu/nodeimage:v1
       - name: Push to Docker HUb
         run: docker push ${{ secrets.DOCKER_USERNAME }}/nodeimage:v1    
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: dockerize
-    steps:
-     - name: Update ECS Service
-       run: |
-          echo "Cluster: ${{ secrets.ECS_CLUSTER }}"
-          echo "Service: ${{ secrets.ECS_SERVICE }}"
-          aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE }} --force-new-deployment
-       env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        AWS_REGION: ${{ secrets.AWS_REGION }}
+  # deploy:
+  #   runs-on: ubuntu-latest
+  #   needs: dockerize
+  #   steps:
+  #    - name: Update ECS Service
+  #      run: |
+  #         echo "Cluster: ${{ secrets.ECS_CLUSTER }}"
+  #         echo "Service: ${{ secrets.ECS_SERVICE }}"
+  #         aws ecs update-service --cluster ${{ secrets.ECS_CLUSTER }} --service ${{ secrets.ECS_SERVICE }} --force-new-deployment
+  #      env:
+  #       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #       AWS_REGION: ${{ secrets.AWS_REGION }} 
